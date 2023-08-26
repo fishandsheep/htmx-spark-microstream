@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="/js/htmx.min.js"></script>
+    <link rel="stylesheet" href="/css/simple.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Homepage</h1>
+    <form hx-put="/addUser" hx-target="#users" hx-swap="afterbegin">
+
+        <label>Name</label>
+        <input type="text" name="name">
+        <label>NickName</label>
+        <input type="text" name="nickName">
+        <label>Mobile</label>
+        <input type="text" name="mobile">
+        <label>Email</label>
+        <input type="text" name="email">
+
+        <button class="btn">addUser</button>
+    </form>
+
+    <p>
+        <input name="searchKey" type="search"
+               hx-post="/searchName"
+               hx-trigger="keyup changed delay:800ms"
+               hx-target="#users"
+               placeholder="Search..."
+        >
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>NickName</th>
+            <th>Mobile</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody id="users"
+               hx-get="/getAllUsers"
+               hx-trigger="load delay:500ms"
+        >
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
