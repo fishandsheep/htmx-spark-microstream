@@ -10,16 +10,8 @@
     <description>a light web app demo via htmx、spark and microstream</description>
     <properties>
         <java.version>17</java.version>
-
     </properties>
     <dependencies>
-
-        <dependency>
-            <groupId>one.microstream</groupId>
-            <artifactId>microstream-storage-embedded</artifactId>
-            <version>08.01.01-MS-GA</version>
-        </dependency>
-
 
         <dependency>
             <groupId>com.sparkjava</groupId>
@@ -33,6 +25,11 @@
             <version>2.7.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>one.microstream</groupId>
+            <artifactId>microstream-storage-embedded</artifactId>
+            <version>08.01.01-MS-GA</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>

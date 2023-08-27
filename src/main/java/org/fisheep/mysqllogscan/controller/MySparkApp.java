@@ -17,42 +17,35 @@ import static spark.Spark.*;
 
 public class MySparkApp {
 
-
     public static void main(String[] args) {
-
-        staticFiles.location("/static");
-
+        //加载数据
         final EmbeddedStorageManager storage = EmbeddedStorage.start();
-        //监听服务关闭的钩子
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            storage.shutdown();
-        }));
-
-        MyRoot root = null;
+        MyRoot root;
         if (storage.root() == null) {
             root = new MyRoot();
             storage.setRoot(root);
             storage.storeRoot();
         } else {
             root = (MyRoot) storage.root();
-
         }
 
+        staticFiles.location("/static");
+        //首页
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             //加载数据
             return render(model, "index");
-
         });
 
+        //首页加载数据
         MyRoot finalRoot = root;
         get("/getAllUsers", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("users", finalRoot.users);
             return render(model, "users");
-
         });
 
+        //添加数据
         put("/addUser", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             //保存
@@ -64,7 +57,6 @@ public class MySparkApp {
                     .build();
             finalRoot.users.add(0, user);
             storage.store(finalRoot.users);
-            //返回给前端
             model.put("name", user.getName());
             model.put("nickName", user.getNickName());
             model.put("mobile", user.getMobile());
@@ -72,6 +64,7 @@ public class MySparkApp {
             return render(model, "user");
         });
 
+        //查询数据
         post("/searchName", (req, res) -> {
             String searchValue = req.queryParams("searchKey");
             Map<String, Object> model = new HashMap<>();
@@ -86,6 +79,11 @@ public class MySparkApp {
             return render(model, "users");
         });
 
+
+        //监听服务关闭的钩子
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            storage.shutdown();
+        }));
     }
 
     public static String render(Map<String, Object> model, String templatePath) {

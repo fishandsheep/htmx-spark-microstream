@@ -10,7 +10,9 @@
 <body>
 <div class="container">
     <h1>Homepage</h1>
-    <form hx-put="/addUser" hx-target="#users" hx-swap="afterbegin">
+    <form hx-put="/addUser"
+          hx-target="#users"
+          hx-swap="afterbegin">
 
         <label>Name</label>
         <input type="text" name="name">
@@ -25,11 +27,10 @@
     </form>
 
     <p>
-        <input name="searchKey" type="search"
+        <input name="searchKey" type="search" placeholder="search name"
                hx-post="/searchName"
-               hx-trigger="keyup changed delay:800ms"
+               hx-trigger="keyup changed delay:1000ms"
                hx-target="#users"
-               placeholder="Search..."
         >
     </p>
 
